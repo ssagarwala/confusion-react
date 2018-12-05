@@ -5,13 +5,22 @@ class Dishdetail extends Component{
 
     renderDish(dish){
         if(dish != null){
-            
+            const comment =this.props.dish.comments.map((eachComment)=>{
+                return (<li>
+                    {eachComment.comment}
+                    {eachComment.author}, {eachComment.date}
+                </li>
+                );
+            });
             return (
                 <Card>
                     <CardImg width="100%" src={dish.image} alt={dish.name}/>
                     <CardBody>
                         <CardTitle> {dish.name} </CardTitle>
-                        <CardText>{dish.description}</CardText>                                              
+                        <CardText>{dish.description}</CardText>    
+                        <ul>
+                            {comment}
+                        </ul>                     
                     </CardBody>
                 </Card>
             );
@@ -25,35 +34,32 @@ class Dishdetail extends Component{
     }
 
     renderComments(dish){
-        if(dish != null) {
-            const comment = this.props.dish.comments.map((eachComment)=>{
-                return (
-                <li key={eachComment.id}>
-                        <p>{eachComment.comment}</p>
-                        <p> -- {eachComment.author}, {eachComment.date} </p>
-                </li>     
-                );
-            });
+        const comment = this.props.dish.comments.map((eachComment)=>{
             return (
-                <div>  
-                    <h4> Comments </h4>
-                    <ul>
-                            {comment}
-                    </ul>                                   
-                </div>            
+               <li key={eachComment.id}>
+                    <p>{eachComment.comment}</p>
+                    <p> -- {eachComment.author}, {eachComment.date} </p>
+               </li>     
             );
-        }
+        });
+        return (
+            <div>  
+               <h4> Comments </h4>
+               <ul>
+                    {comment}
+               </ul>                                   
+            </div>            
+        );
     }
 
     render(){
-       
             return(
                         <div className="row">
                             <div className="col-12 col-md-5 m-1">
                                 {this.renderDish(this.props.dish)}
                             </div> 
                             <div className="col-12 col-md-5 m-1">
-                               {this.renderComments(this.props.dish)}
+                               
                             </div>
                          </div>                 
                 );
