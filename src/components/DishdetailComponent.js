@@ -75,9 +75,9 @@ class DishDetail extends Component {
     };
 
 
-    newMethod() {
+   /* newMethod() {
         "in dish detail ";
-    }
+    }*/
 };
 
 export default DishDetail;
