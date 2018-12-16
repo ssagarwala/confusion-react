@@ -54,12 +54,15 @@ class DishDetail extends Component {
 
     render() {
 
+        
         let comments;
         if (this.props.dish != null) {
             comments = this.renderComments(this.props.dish.comments);
+        
         };
 
         return (
+      
             <div className="row">
                 <div className="col-12 col-md-5 m-1">
                     {this.renderDish(this.props.dish)}
@@ -71,6 +74,10 @@ class DishDetail extends Component {
         );
     };
 
+
+    newMethod() {
+        "in dish detail ";
+    }
 };
 
 export default DishDetail;
