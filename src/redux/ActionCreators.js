@@ -3,17 +3,47 @@ import { DISHES } from '../shared/dishes';
 import { baseUrl } from '../shared/baseUrl';
 //An Arrow function that takes 4 parameters
 // will return a plain JS object
-export const addComment = (dishId, rating, author, comment) =>({
+export const addComment = (comment) =>({
         
         type:ActionTypes.ADD_COMMENT,
-        payload:{
+        payload:comment
+});
+
+export const postComment = (dishId, rating, author, comment)=>(dispatch)=>{
+    const newComment = {
             dishId:dishId,
             rating:rating,
             author:author,
-            comment:comment
-
+            comment:comment       
+    }
+    newComment.date = new Date().toISOString();
+    return fetch(baseUrl + 'comments',{
+        method: 'POST',
+        body:JSON.stringify(newComment),
+        headers:{
+            'Content-Type':'application/json'
+        },
+        credentials:'same-origin'
+    })
+    .then(response => {
+        if(response.ok){
+            return response;
         }
-});
+        else{
+            var error= new Error('Error ' + response.status + ':' + response.statusText );
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message)
+        throw errmess;
+    })
+    .then (response=> response.json())
+    .then(response => dispatch(addComment(response)))
+    .catch(error => {console.log('Post comments', error.message);
+            alert('Your comment could not be posted \n Error : '+ error.message);})
+};
 
 
 export const fetchDishes = () => (dispatch) => {
@@ -99,7 +129,7 @@ export const fetchPromos = () => (dispatch) => {
             var errmess = new Error(error.message)
             throw errmess;
         })
-        .then (response=> response.json() )
+        .then (response=> response.json())
         .then(promos => dispatch(addPromos(promos)))
         .catch(error => dispatch(promosFailed(error.message)));
 }

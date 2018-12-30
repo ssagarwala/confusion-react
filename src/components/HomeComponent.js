@@ -3,7 +3,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reac
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
-function RenderCard({item,isLoading, errMess}){
+function RenderCard({ item, isLoading, errMess}){
     if(isLoading){
         return(
             <Loading />
@@ -38,7 +38,7 @@ function Home (props){
                     errMess={props.dishesErrMess} />
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.promotions}
+                    <RenderCard item={props.promotion}
                          isLoading={props.promosLoading}
                          errMess={props.promosErrMess} />
                 </div>
