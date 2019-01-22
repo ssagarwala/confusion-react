@@ -1,0 +1,212 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.17134}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 import React, \{Component\} from 'react';\par
+import \{Breadcrumb, BreadcrumbItem, Button, Col, Label, Row\} from 'reactstrap';\par
+import \{Link\} from 'react-router-dom';\par
+import \{Control, Errors, Form\} from 'react-redux-form';\par
+\par
+const required = (val) => val && val.length;\par
+const maxLength = (len) => (val) => !(val) || (val.length <= len);\par
+const minLength = (len) => (val) => val && (val.length >= len);\par
+const isNumber = (val) => !isNaN(Number(val));\par
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]\{2,4\}$/i.test(val);\par
+\par
+class Contact extends Component \{\par
+    constructor(props) \{\par
+        super(props);\par
+\par
+        this.handleSubmit = this.handleSubmit.bind(this);\par
+    \}\par
+\par
+    handleSubmit(values) \{\par
+        this.props.postFeedback(values.firstname, values.lastname, values.telnum, values.email, values.agree,\par
+            values.contactType, values.message);\par
+        this.props.resetFeedbackForm();\par
+        // event.preventDefault();\par
+    \}\par
+\par
+    render() \{\par
+        return (\par
+            <div className="container">\par
+                <div className="row">\par
+                    <Breadcrumb>\par
+                        <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>\par
+                        <BreadcrumbItem active>Contact Us</BreadcrumbItem>\par
+                    </Breadcrumb>\par
+                    <div className="col-12">\par
+                        <h3>Contact Us</h3>\par
+                        <hr/>\par
+                    </div>\par
+                </div>\par
+\par
+                <div className="row row-content">\par
+                    <div className="col-12">\par
+                        <h3>Location Information</h3>\par
+                    </div>\par
+                    <div className="col-12 col-sm-4 offset-sm-1">\par
+                        <h5>Our Address</h5>\par
+                        <address>\par
+                            121, Clear Water Bay Road<br/>\par
+                            Clear Water Bay, Kowloon<br/>\par
+                            HONG KONG<br/>\par
+                            <i className="fa fa-phone"></i>: +852 1234 5678<br/>\par
+                            <i className="fa fa-fax"></i>: +852 8765 4321<br/>\par
+                            <i className="fa fa-envelope"></i>: <a\par
+                            href="mailto:confusion@food.net">confusion@food.net</a>\par
+                        </address>\par
+                    </div>\par
+                    <div className="col-12 col-sm-6 offset-sm-1">\par
+                        <h5>Map of our Location</h5>\par
+                    </div>\par
+                    <div className="col-12 col-sm-11 offset-sm-1">\par
+                        <div className="btn-group" role="group">\par
+                            <a role="button" className="btn btn-primary" href="tel:+85212345678"><i\par
+                                className="fa fa-phone"></i> Call</a>\par
+                            <a role="button" className="btn btn-info" href="skype:brian.cunnie@gmail.com"><i\par
+                                className="fa fa-skype"></i> Skype</a>\par
+                            <a role="button" className="btn btn-success" href="mailto:confusion@food.net"><i\par
+                                className="fa fa-envelope-o"></i> Email</a>\par
+                        </div>\par
+                    </div>\par
+                </div>\par
+                <div className="row row-content">\par
+                    <div className="col-12">\par
+                        <h3>Send us Your Feedback</h3>\par
+                    </div>\par
+                    <div className="col-12 col-md-9">\par
+                        <Form model='feedback' onSubmit=\{(values) => this.handleSubmit(values)\}>\par
+                            <Row className="form-group">\par
+                                <Label htmlFor="firstname" md=\{2\}>First Name</Label>\par
+                                <Col md=\{10\}>\par
+                                    <Control.text model=".firstname" id="firstname" name="firstname"\par
+                                                  placeholder="First Name"\par
+                                                  className="form-control"\par
+                                                  validators=\{\{\par
+                                                      required, minLength: minLength(3), maxLength: maxLength(15)\par
+                                                  \}\}\par
+                                    />\par
+                                    <Errors\par
+                                        className="text-danger"\par
+                                        model=".firstname"\par
+                                        show="touched"\par
+                                        messages=\{\{\par
+                                            required: 'Required',\par
+                                            minLength: 'Must be greater than 2 characters',\par
+                                            maxLength: 'Must be 15 characters or less'\par
+                                        \}\}\par
+                                    />\par
+                                </Col>\par
+                            </Row>\par
+                            <Row className="form-group">\par
+                                <Label htmlFor="lastname" md=\{2\}>Last Name</Label>\par
+                                <Col md=\{10\}>\par
+                                    <Control.text model=".lastname" id="lastname" name="lastname"\par
+                                                  placeholder="Last Name"\par
+                                                  className="form-control"\par
+                                                  validators=\{\{\par
+                                                      required, minLength: minLength(3), maxLength: maxLength(15)\par
+                                                  \}\}\par
+                                    />\par
+                                    <Errors\par
+                                        className="text-danger"\par
+                                        model=".lastname"\par
+                                        show="touched"\par
+                                        messages=\{\{\par
+                                            required: 'Required',\par
+                                            minLength: 'Must be greater than 2 characters',\par
+                                            maxLength: 'Must be 15 characters or less',\par
+                                        \}\}\par
+                                    />\par
+                                </Col>\par
+                            </Row>\par
+                            <Row className="form-group">\par
+                                <Label htmlFor="telnum" md=\{2\}>Contact Tel.</Label>\par
+                                <Col md=\{10\}>\par
+                                    <Control.text model=".telnum" id="telnum" name="telnum"\par
+                                                  placeholder="Tel. Number"\par
+                                                  className="form-control"\par
+                                                  validators=\{\{\par
+                                                      required,\par
+                                                      minLength: minLength(3),\par
+                                                      maxLength: maxLength(15),\par
+                                                      isNumber\par
+                                                  \}\}></Control.text>\par
+                                    <Errors\par
+                                        className="text-danger"\par
+                                        model=".telnum"\par
+                                        show="touched"\par
+                                        messages=\{\{\par
+                                            required: 'Required',\par
+                                            minLength: 'Must be greater than 2 numbers',\par
+                                            maxLength: 'Must be 15 numbers or less',\par
+                                            isNumber: 'Must be a number',\par
+                                        \}\}\par
+                                    />\par
+                                </Col>\par
+                            </Row>\par
+                            <Row className="form-group">\par
+                                <Label htmlFor="email" md=\{2\}>Email</Label>\par
+                                <Col md=\{10\}>\par
+                                    <Control.text model=".email" id="email" name="email"\par
+                                                  placeholder="Email"\par
+                                                  className="form-control"\par
+                                                  validators=\{\{\par
+                                                      required, validEmail\par
+                                                  \}\}\par
+                                    />\par
+                                    <Errors\par
+                                        className="text-danger"\par
+                                        model=".email"\par
+                                        show="touched"\par
+                                        messages=\{\{\par
+                                            required: 'Required',\par
+                                            validEmail: 'Invalid Email Address'\par
+                                        \}\}\par
+                                    />\par
+                                </Col>\par
+                            </Row>\par
+                            <Row className="form-group">\par
+                                <Col md=\{\{size: 6, offset: 2\}\}>\par
+                                    <div className="form-check">\par
+                                        <Label check>\par
+                                            <Control.checkbox model=".agree" name="agree"\par
+                                                              className="form-check-input"\par
+                                            /> \{' '\}\par
+                                            <strong>May we contact you?</strong>\par
+                                        </Label>\par
+                                    </div>\par
+                                </Col>\par
+                                <Col md=\{\{size: 3, offset: 1\}\}>\par
+                                    <Control.select model=".contactType" name="contactType"\par
+                                                    className="form-control">\par
+                                        <option>Tel.</option>\par
+                                        <option>Email</option>\par
+                                    </Control.select>\par
+                                </Col>\par
+                            </Row>\par
+                            <Row className="form-group">\par
+                                <Label htmlFor="message" md=\{2\}>Your Feedback</Label>\par
+                                <Col md=\{10\}>\par
+                                    <Control.textarea model=".message" id="message" name="message"\par
+                                                      rows="12"\par
+                                                      className="form-control"/>\par
+                                </Col>\par
+                            </Row>\par
+                            <Row className="form-group">\par
+                                <Col md=\{\{size: 10, offset: 2\}\}>\par
+                                    <Button type="submit" color="primary">\par
+                                        Send Feedback\par
+                                    </Button>\par
+                                </Col>\par
+                            </Row>\par
+                        </Form>\par
+                    </div>\par
+                </div>\par
+            </div>\par
+        );\par
+    \}\par
+\}\par
+\par
+export default Contact;\par
+}
+ 
